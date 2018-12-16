@@ -1,0 +1,65 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
+
+// http://codeforces.com/contest/707/problem/B
+public class Main { 
+    public static void main(String arags[]) throws Exception {
+        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter output = new PrintWriter(System.out);
+        StringTokenizer token = new StringTokenizer(input.readLine());
+
+        int n = Integer.parseInt(token.nextToken());
+        int m = Integer.parseInt(token.nextToken());
+        int k = Integer.parseInt(token.nextToken());
+        
+        Root conn[] = new Root[m];
+        for(int i=0;i<m;i++) {
+            token = new StringTokenizer(input.readLine());
+            conn[i] = new Root(
+                    Integer.parseInt(token.nextToken())-1,
+                    Integer.parseInt(token.nextToken())-1,
+                    Integer.parseInt(token.nextToken()));
+            
+        }
+        
+        boolean godam[] = new boolean[n];
+        if(k != 0) {
+            token = new StringTokenizer(input.readLine());
+            for(int i=0;i<k;i++) {
+                godam[Integer.parseInt(token.nextToken())-1]=true;
+            }
+        }
+        
+        int ans = Integer.MAX_VALUE;
+        for(int i=0;i<m;i++) {
+            if(godam[conn[i].u] != godam[conn[i].v]) {
+                ans = Math.min(ans,conn[i].wt);
+            }
+        }
+        
+        if(ans == Integer.MAX_VALUE) {
+            ans = -1;
+        }
+        
+        output.print(ans);
+        output.close();
+    }
+    
+    static class Root {
+        int u,v,wt;
+        
+        Root() {
+            this.u = 0;
+            this.v = 0;
+            this.wt = 0;
+        }
+        
+        Root(int u, int v, int wt) {
+            this.u = u;
+            this.v = v;
+            this.wt=  wt;
+        }
+    }
+}
